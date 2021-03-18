@@ -46,11 +46,24 @@ class Jug:
         else:
             ("The jug is empty.")
 
+    def pour(self, value):
+        if not self.is_empty():
+            if self.currentvolume > value:
+                self.currentvolume -=value
+                return self.currentvolume
+            else:
+                self.currentvolume = 0
+                return current_volume
+        else:
+            print("{} is already empty.".format(self.name))
+
+
+
 def list_of_moves(): 
     print("Select one of the following:\n")
     print("1 to Fill Large Jug")
     print("2 to Fill Small Jug")
-    print("3 to Pour Large Jug into Samll Jug")
+    print("3 to Pour Large Jug into Small Jug")
     print("4 to Pour Small Jug into Large Jug")
     print("5 to Empty Large Jug")
     print("6 to Empty Small Jug")
@@ -72,7 +85,7 @@ print("2 to Fill Small Jug")
 print("What do you want to do?: ")
 user_input = int(input(""))
 
-#while large_jug.peek() != 4:
+
 
 if user_input != 1 and user_input != 2:
     print("Invalid response. Try again.")
@@ -87,6 +100,7 @@ else:
     print(large_jug)
     print(small_jug)
 
+#while(large_jug.peek() != 4):
 list_of_moves()
 
 print("Next move? ")
@@ -108,6 +122,40 @@ elif user_input == 2:
         small_jug.fill()
         print(large_jug)
         print(small_jug)
+elif user_input == 3:
+    large_jug_volume = large_jug.peek()
+    small_jug_volume = small_jug.peek()
+    added_vol = small_jug.limit - small_jug_volume
+    if small_jug_volume == small_jug.limit:
+        print("Small jug is already full. Try again.") 
+    elif large_jug_volume == 0:
+        print("Large jug is empty. Try again.") 
+    elif large_jug_volume > added_vol:
+        small_jug.fill()
+        large_jug.pour(added_vol)
+        print(large_jug)
+        print(small_jug)
+
+elif user_input == 4:
+    large_jug_volume = large_jug.peek()
+    small_jug_volume = small_jug.peek()
+    added_vol = large_jug.limit - large_jug_volume
+    if large_jug_volume == large_jug.limit:
+        print("Large jug is already full. Try again.") 
+    elif small_jug_volume == 0:
+        print("Small jug is empty. Try again.") 
+    elif small_jug_volume > added_vol:
+        large_jug.fill()
+        small_jug.pour(added_vol)
+        print(large_jug)
+        print(small_jug)
+    elif small_jug_volume < added_vol:
+        large_jug.push(small_jug_volume)
+        small_jug.pop()
+        print(large_jug)
+        print(small_jug)
+        
+
 
 
 
